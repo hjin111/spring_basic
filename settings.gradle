@@ -1,1 +1,2 @@
+// 멀티모듈로 빌드시에 rootProject가 어떤 것 인지를 명시한다.
 rootProject.name = 'basic'
