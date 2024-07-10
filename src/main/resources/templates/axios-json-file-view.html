@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="padding-top: 40px; padding-bottom: 60px;  padding-left:30px; padding-right: 30px; border: 4px solid slategray; border-radius: 10px; text-align:center; width: 330px;">
+    <div class="page-header" style="text-align: center;"><h3>회원가입</h3></div>
+    <form style="text-align: center; padding-top: 10px;" id="form-view">
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="name"><input type="text" class="form-control" name="name" id="name" placeholder="이름"></label>
+        </div>
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="email"><input type="text"  class="form-control" name="email" id="email" placeholder="email"></label>
+        </div>
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="password"><input type="text"  class="form-control" name="password" id="password" placeholder="password"></label>
+        </div>
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="file"><input type="file"  class="form-control" name="file" id="file" placeholder="file"></label>
+        </div>
+        <div style="padding-top: 30px; padding-right: 5px;">
+            <button type="submit" value="제출" class="btn btn-secondary float-end">제출하기</button>
+        </div>
+    </form>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    document.getElementById("form-view").addEventListener("submit", async function(event){
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const hello = {name:name, email:email, password:password};
+      const helloJson = JSON.stringify(hello);
+
+      const fileInput = document.getElementById("file");
+      const file = fileInput.files[0]; // file은 배열 형태로 get된다.
+
+      const formData = new FormData();
+<!--      formData.append("hello",helloJson);-->
+<!--      Blob 함수는 데이터형을 지정/변환할 때 사용.-->
+      formData.append("hello", new Blob([helloJson], {type:"application/json"}));
+      formData.append("file",file);
+
+      try{
+        const response = await axios.post("http://localhost:8080/hello/axios-json-file-view", formData, {headers : {'Content-Type':'multipart/form-data'}});
+        console.log(response.data);
+      } catch(e){
+        console.log(e.message);
+      }
+    })
+</script>
+</body>
+</html>

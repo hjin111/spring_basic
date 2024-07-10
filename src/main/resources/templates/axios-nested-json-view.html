@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="padding-top: 40px; padding-bottom: 60px;  padding-left:30px; padding-right: 30px; border: 4px solid slategray; border-radius: 10px; text-align:center; width: 330px;">
+    <div class="page-header" style="text-align: center;"><h3>회원가입</h3></div>
+    <form style="text-align: center; padding-top: 10px;" id="form-view">
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="name"><input type="text" class="form-control" name="name" id="name" placeholder="이름"></label>
+        </div>
+        <div class="form-group" style="padding-top: 20px;">
+            <label for="email"><input type="text"  class="form-control" name="email" id="email" placeholder="email"></label>
+        </div>
+        <div id="grades">
+            <div class="form-group grade" style="padding-top: 20px;">
+                <label for="subject"><input type="text"  class="form-control className" name="className" id="subject" placeholder="과목"></label>
+                <label for="score"><input type="text"  class="form-control point" name="point" id="score" placeholder="score"></label>
+            </div>
+        </div>
+        <div style="padding-top: 30px; padding-right: 5px; display: flex; padding-left: 30px">
+            <div style="padding-right:13px">
+                <button type="button" class="btn btn-secondary float-end" onclick="addGrade()">성적추가</button>
+            </div>
+            <div>
+                <button type="submit" value="제출" class="btn btn-secondary float-end">제출하기</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+
+    function addGrade(){
+         const gradeDiv = document.getElementById("grades");
+         gradeDiv.innerHTML += `<div class="form-group grade" style="padding-top: 20px;">
+                <label for="subject"><input type="text"  class="form-control className" name="className" id="subject" placeholder="과목"></label>
+                <label for="score"><input type="text"  class="form-control point" name="point" id="score" placeholder="score"></label>
+            </div>`;
+    }
+
+    document.getElementById("form-view").addEventListener("submit", async function(event){
+       event.preventDefault();
+       const name = document.getElementById("name").value;
+       const email = document.getElementById("email").value;
+       let grades = [];
+       const gradeDivs = document.getElementsByClassName("grade");
+       for(let i = 0; i < gradeDivs.length; i++){
+          const className = gradeDivs[i].getElementsByClassName("className")[0].value;
+          const point = gradeDivs[i].getElementsByClassName("point")[0].value;
+          const gradeObj = {className, point};
+          grades.push(gradeObj);
+       }
+
+       console.log(grades);
+
+       try{
+         const response = await axios.post("http://localhost:8080/hello/axios-nested-json-view", {name:name, email: email, grades:grades});
+         console.log(response.data);
+       } catch(e){
+         console.log(e.message);
+       }
+     })
+
+</script>
+</body>
+</html>
