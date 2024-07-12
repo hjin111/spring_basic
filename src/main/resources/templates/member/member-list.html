@@ -6,15 +6,18 @@
 </head>
 <body>
 <div th:replace="member/header :: headerFragment"></div>
-    <h2>회원 목록 조회</h2>
+    <h2>회원목록조회</h2>
     <table>
         <tr>
+            <th>id</th>
             <th>이름</th>
             <th>이메일</th>
         </tr>
         <tr th:each = "member : ${memberList}">
+            <a><td th:text="${member.id}"></td></a>
             <td th:text="${member.name}"></td>
             <td th:text="${member.email}"></td>
+            <td><a th:href="@{/member/detail/{id}(id = ${member.id})}">상세조회</a></td>
         </tr>
     </table>
 </body>

@@ -1,11 +1,9 @@
 package com.beyond.basic.controller;
 
-import com.beyond.basic.domain.Member;
+import com.beyond.basic.domain.MemberDetResDto;
 import com.beyond.basic.domain.MemberReqDto;
 import com.beyond.basic.domain.MemberResDto;
 import com.beyond.basic.service.MemberService;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,9 +49,11 @@ public class MemberController {
     // 회원 상세 조회 : memberDetail
     // url(uri) : member/1, member/2
     // 화면명 : member-detail
-    @GetMapping("/member/{id}")
+    @GetMapping("/member/detail/{id}")
     // int 또는 long 받을 경우 스프링에서 형변환(String->Long)
-    public String memberDetail(@PathVariable Long id){
+    public String memberDetail(@PathVariable Long id, Model model){
+        MemberDetResDto memberDetResDto = memberService.memberDetail(id);
+        model.addAttribute("member", memberDetResDto);
         return "member/member-detail";
     }
 
