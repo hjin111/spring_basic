@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -27,7 +29,11 @@ public class HelloController {
     // responsebody를 사용하면 화면이 아닌 데이터를 return
     // 만약 여기서 responsebody가 없고 return이 스트링이면 스프링은 templates 폴더 밑에 helloworld.html 화면을 찾아 리턴한다.
     // ( 화면을 리턴하고 싶으면 responsebody를 빼고 데이터를 리턴하고 싶으면 responsebody를 붙이면 된다. )
-    public String helloWorld(){
+    // public String helloWorld(){
+        // 아래와 같이 Controller에서도 HttpServletRequest를 주입받아 사용가능
+        public String helloWorld(HttpServletRequest request){
+            System.out.println(request.getSession());
+            System.out.println(request.getHeader("cookie"));
         return "helloworld";
     }
 
@@ -263,6 +269,11 @@ public class HelloController {
     public String axiosNestedJsonPost(@RequestBody Student student){
         System.out.println(student);
         return "ok";
+    }
+
+    // 빌더 패턴 실습
+    public void helloBuilderTest(){
+        Hello hello = Hello.builder().build();
     }
 
 }

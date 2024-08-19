@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDetResDto {
+public class PostResDto {
+
     private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private String createdTime;
+    private String title;
+
 }

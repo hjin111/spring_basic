@@ -2,8 +2,10 @@ package com.beyond.basic.repository;
 
 import com.beyond.basic.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,5 +16,11 @@ import java.util.Optional;
 public interface MyMemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmail(String email); // 이렇게만 선언하면 런타임 시점에 알아서 기능 다 만들어줌
+
+    List<Member> findByName(String name);
+
+    // jpql 문법을 통한 raw쿼리 작성시 컴파일 타임에서 오류 체크e
+    // @Query("select m from Member m")
+    // List<Member> myFindAll();
 
 }

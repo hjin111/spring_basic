@@ -21,4 +21,42 @@ public class Hello {
 //        return "이름은 : " + this.name + " email은 : " + this.email;
 //    }
 
+    // Builder 패턴 직접 구현
+    // 빌더 적용 대상 생성자가 필요
+    public Hello(HelloBuilder helloBuilder){
+        this.name = helloBuilder.name;
+        this.email = helloBuilder.email;
+        this.password = helloBuilder.password;
+    }
+
+    public static HelloBuilder builder(){
+        return new HelloBuilder();
+    }
+
+    // static 내부 클래스
+    public static class HelloBuilder {
+        private String name;
+        private String email;
+        private String password;
+
+        public HelloBuilder name(String name){
+            this.name = name;
+            return this; // 여기서 this는 HelloBuilder
+        }
+
+        public HelloBuilder email(String email){
+            this.email = email;
+            return this; // 여기서 this는 HelloBuilder 의미
+        }
+
+        public HelloBuilder password(String password){
+            this.password = password;
+            return this; // 여기서 this는 HelloBuilder 의미
+        }
+
+        public Hello build(){
+            return new Hello(this);
+        }
+    }
+
 }

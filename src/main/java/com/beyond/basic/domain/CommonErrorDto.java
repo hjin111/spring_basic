@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberDetResDto {
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
-    private String createdTime;
+public class CommonErrorDto {
+
+    private int status_code;
+    private String error_message;
+
 }

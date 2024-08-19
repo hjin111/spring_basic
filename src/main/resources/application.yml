@@ -6,6 +6,11 @@
 #  port: 8081
 
 spring:
+  mvc:
+    pathmatch:
+      # springboot2.4이상에서는 기본적으로 PathPatternParser를 사용하고 있는데,
+      # springfox와 같은 일부라이브러리에서는 해당 pathpattern rule과 충돌나는 경우가 path 방식 변경
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/basic
